@@ -1,16 +1,49 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import { SettingsContext,SettingsContextType } from '../Context/SettingsContext';
 import { CapturedLocations } from '../views/MapArea';
+import {geolocationUrl} from '../../Constants/Constants';
+import axios from 'axios';
+import { coordinate } from '../Context/MapContext';
 
 
-const background = '/images/sat.jpg';
+interface CapturedLocationWithGeo extends CapturedLocations 
+{
+    geolocation:{
+        locality:string,
+        country:string
+    }
+}
 
 
 const General = () => {
 
 let {capturedLocations,changeCapturedLocations} = useContext(SettingsContext) as SettingsContextType;  
-useEffect(()=>{},[]);
+let [capturedLocationsGeo,setCapturedLocationsGeo] = useState<CapturedLocationWithGeo[]>([]);
+let [loading,setLoading] = useState<boolean>(false);
+    useEffect(()=>{
+        // const fetchGeolocationData  = async (location:CapturedLocations) => 
+        // {
+        //     setLoading(true);
+        //     let request = await axios.post(geolocationUrl+`json?latlng=${location.coordinates.lat},${location.coordinates.lng}&key=${process.env.REACT_APP_API_KEY}`);
+        //     let result = request.data.results[0];
+        //     let addressComponents = result.address_components;
+        //     let {long_name:locality} = addressComponents[1];
+        //     let {short_name:country} = addressComponents[4];
+        //     let coordinate:coordinate = {lat:location.coordinates.lat,lng:location.coordinates.lng};
+        //     let geolocationObj = {locality:locality,country:country};
+        //     let geolocation_final: CapturedLocationWithGeo = {coordinates:coordinate,geolocation:geolocationObj,prediction:location.prediction,predictionString:location.predictionString,zoom:location.zoom}; 
+        //     console.log('fetched');
+        //     setCapturedLocationsGeo(oldArray=>[...oldArray,geolocation_final]);
+
+        // }
+        // capturedLocations.forEach((location)=>{
+        //     console.log('location');
+        //    fetchGeolocationData(location);  
+        // });
+    },[]);
+
+
 
 
   return (
@@ -60,7 +93,7 @@ useEffect(()=>{},[]);
                             </div>
                             <div className="right flex flex-c">
                                 <div className="top other-color-2">
-                                    Tuscany, Italy
+                                   Tuscany, Italy
                                 </div>
                                 <div className="bottom other-color-2">
                                     {location.predictionString==='positive'?'Mining':'Non-Mining'}

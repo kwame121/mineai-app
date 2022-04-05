@@ -14,9 +14,6 @@ interface ActionAreaProps
 
 
 const ActionArea: FC<ActionAreaProps> = (props) => {
-
-
-
   return (
     <div className="action-area flex flex-c other-gray-3">
         <div className="action-btn zoom-in other-gray-3" >

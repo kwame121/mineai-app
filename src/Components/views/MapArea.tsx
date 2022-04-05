@@ -134,6 +134,7 @@ const MapArea = () => {
           let prediction = {argmax:argMax,data:data};
           let predictionString = argMax===0? 'positive':'negative';
           let _capturedLocation:CapturedLocations = {coordinates:capturedCoordinates,prediction:prediction,predictionString:predictionString,zoom:zoom};
+          
           changeCenter(capturedCoordinates);
           changeZoom(map.getZoom());
           changeCapturedLocations(_capturedLocation,map.getZoom());
