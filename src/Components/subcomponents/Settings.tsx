@@ -153,7 +153,7 @@ const Settings = () => {
         </div>
         <div className="control-scheme flex flex-c other-gray-2">
                 <div className="title flex flex-r other-color-2">
-                    <div>Control Scheme</div>
+                    <div>Control Schemes</div>
                 </div>
                 <div className="options-area flex flex-c other-color-2">
                     <div className="option flex flex-r align-center-h">
