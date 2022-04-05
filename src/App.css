@@ -344,11 +344,13 @@ html {
 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  text-align:right;
 }
 .prediction-card .right .bottom
 {
   font-size: 0.9rem;
   font-weight: 300;
+  text-align: right;
 }
 
 .prediction-card .left .image-area 
@@ -665,6 +667,12 @@ textarea:focus, input:focus{
 {
   background-color: #478966;
   cursor:pointer;
+}
+
+.no-predictions
+{
+  height:30vh;
+  font-weight: 300;
 }
 
 

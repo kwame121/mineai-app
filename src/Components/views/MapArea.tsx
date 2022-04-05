@@ -8,7 +8,13 @@ import {coordinate, MapContext,MapContextType} from '../Context/MapContext';
 import {SettingsContext,SettingsContextType} from '../Context/SettingsContext';
 import axios from 'axios';
 import CaptureBtn from '../subcomponents/Capturebtn';
+import {geolocationUrl} from '../../Constants/Constants';
 
+export interface geolocation
+{
+  locality:string,
+  country:string
+}
 
 
 export interface CapturedLocations 
@@ -16,7 +22,9 @@ export interface CapturedLocations
   coordinates:coordinate,
   prediction:any,
   predictionString:string,
-  zoom:number
+  zoom:number,
+  geolocation:geolocation,
+
 }
 
 const MapArea = () => {
@@ -83,6 +91,19 @@ const MapArea = () => {
       }
     }
 
+    async function fetchGeolocationData (location:coordinate)
+    {
+        let request = await axios.post(geolocationUrl+`json?latlng=${location.lat},${location.lng}&key=${process.env.REACT_APP_API_KEY}`);
+        let result = request.data.results[0];
+        let addressComponents = result.address_components;
+        let {long_name:locality} = addressComponents[1];
+        let {long_name:country} = addressComponents[4];
+        // let coordinate:coordinate = {lat:location.lat,lng:location.lng};
+        let geolocationObj = {locality:locality,country:country};
+        return geolocationObj;
+          // let geolocation_final: CapturedLocations = {coordinates:coordinate,geolocation:geolocationObj,prediction:location.prediction,predictionString:location.predictionString,zoom:location.zoom}; 
+    }
+
     
     function zoomHandler (zoom:number,action:string)
     {
@@ -133,8 +154,8 @@ const MapArea = () => {
           let capturedCoordinates:coordinate = {lat:_lat,lng:_lng};
           let prediction = {argmax:argMax,data:data};
           let predictionString = argMax===0? 'positive':'negative';
-          let _capturedLocation:CapturedLocations = {coordinates:capturedCoordinates,prediction:prediction,predictionString:predictionString,zoom:zoom};
-          
+          let geolocation = await fetchGeolocationData({lat:_lat,lng:_lng})
+          let _capturedLocation:CapturedLocations = {coordinates:capturedCoordinates,prediction:prediction,predictionString:predictionString,zoom:zoom,geolocation:geolocation};
           changeCenter(capturedCoordinates);
           changeZoom(map.getZoom());
           changeCapturedLocations(_capturedLocation,map.getZoom());

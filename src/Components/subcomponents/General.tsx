@@ -54,7 +54,7 @@ let [loading,setLoading] = useState<boolean>(false);
             </div>
             <div className="general-card flex flex-c other-gray">
                 <div className="location flex flex-r align-center-h">
-                    <div className="left other-color">Tuscany, Italy</div>
+                    <div className="left other-color">{capturedLocations.length>0?capturedLocations[capturedLocations.length-1].geolocation.locality:'Tuscany'} , {capturedLocations.length>0?capturedLocations[capturedLocations.length-1].geolocation.country:'Italy'}</div>
                     <div className="right other-color"><NearMeIcon style={{fontSize:'1.5rem'}}/></div>
                 </div>
                 <div className="status secondary-color">
@@ -82,6 +82,12 @@ let [loading,setLoading] = useState<boolean>(false);
             </div>
             <div className="recent-predictions flex flex-c w-100 align-center-h">
 
+                {capturedLocations.length==0&&
+                    <div className="flex flex-c no-predictions other-color-2 align-center-v">
+                        No Predictions Yet                   
+                    </div>
+                }
+
                 {
                 capturedLocations.slice(0).reverse().map((location,index)=>{
                     var imgUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" +location.coordinates.lat + "," + location.coordinates.lng + "&zoom=" + location.zoom +"&size=" + 250 + "x" + 250 + "&maptype=satellite&key="+process.env.REACT_APP_API_KEY;
@@ -93,7 +99,7 @@ let [loading,setLoading] = useState<boolean>(false);
                             </div>
                             <div className="right flex flex-c">
                                 <div className="top other-color-2">
-                                   Tuscany, Italy
+                                   {location.geolocation.locality}, {location.geolocation.country}
                                 </div>
                                 <div className="bottom other-color-2">
                                     {location.predictionString==='positive'?'Mining':'Non-Mining'}
