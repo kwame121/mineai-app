@@ -21,6 +21,8 @@ const General = () => {
 let {capturedLocations,changeCapturedLocations} = useContext(SettingsContext) as SettingsContextType;  
 let [capturedLocationsGeo,setCapturedLocationsGeo] = useState<CapturedLocationWithGeo[]>([]);
 let [loading,setLoading] = useState<boolean>(false);
+
+const returnPredictionString = (predictionString:string) => {return (predictionString==='positive')?'Mining':'Non-Mining'}
     useEffect(()=>{
         // const fetchGeolocationData  = async (location:CapturedLocations) => 
         // {
@@ -46,6 +48,8 @@ let [loading,setLoading] = useState<boolean>(false);
 
 
 
+
+
   return (
     <div className="general flex flex-c h-100 w-100">
         <div className="general-top flex flex-c w-100 ">
@@ -58,20 +62,20 @@ let [loading,setLoading] = useState<boolean>(false);
                     <div className="right other-color"><NearMeIcon style={{fontSize:'1.5rem'}}/></div>
                 </div>
                 <div className="status secondary-color">
-                    Non-Mining
+                    {capturedLocations.length>0?returnPredictionString(capturedLocations[capturedLocations.length-1].predictionString):'No Prediction'}
                 </div>
                 <div className="general-card-details flex flex-c">
                     <div className="detail-item flex flex-r other-color-2">
                         <div className="left">Altitude</div>
-                        <div className="right">~ 17,000</div>
+                        <div className="right">≈ {capturedLocations.length>0?capturedLocations[capturedLocations.length-1].zoom:0}</div>
                     </div>
                     <div className="detail-item flex flex-r other-color-2">
                         <div className="left">Latitude</div>
-                        <div className="right">~ 5.799366</div>
+                        <div className="right">≈ {capturedLocations.length>0?capturedLocations[capturedLocations.length-1].coordinates.lat.toFixed(5):0}</div>
                     </div>
                     <div className="detail-item flex flex-r other-color-2">
                         <div className="left">Longitude</div>
-                        <div className="right">~ 5.799366</div>
+                        <div className="right">≈ {capturedLocations.length>0?capturedLocations[capturedLocations.length-1].coordinates.lng.toFixed(5):0}</div>
                     </div>
                 </div>
             </div>
