@@ -1,55 +1,108 @@
-import React, { useState } from 'react'
-import TaskBar from './TaskBar'
-import MapArea from './MapArea'
-import { SettingsContext, SettingsContextType } from '../Context/SettingsContext';
+import React, { useState } from 'react';
+import TaskBar from './TaskBar';
+import MapArea from './MapArea';
+import {
+  SettingsContext,
+  SettingsContextType,
+} from '../Context/SettingsContext';
 import { CapturedLocations } from './MapArea';
 
+export const SettingsProvider: React.FC<React.ReactNode> = ({ children }) => {
+  const defaultLocation: CapturedLocations = {
+    coordinates: { lat: 5.799396601612896, lng: -0.12223490000001114 },
+    geolocation: { country: '', locality: '' },
+    prediction: {},
+    predictionString: '',
+    zoom: 17,
+  };
+  const [overlayColor, setOverlayColor] = useState('#EB7601');
+  const [controlScheme, setControlScheme] = useState('box');
+  const [unit, setUnit] = useState('metric');
+  const [capturedLocations, setCapturedLocations] = useState<
+    CapturedLocations[]
+  >([]);
+  const [showingDetailsModal, setDetailsModal] = useState<boolean>(false);
+  const [selectedLocation, setSelectedLocation] =
+    useState<CapturedLocations>(defaultLocation);
+  const [filterLowCertaintyPredictions, setfilterLowCertaintyPredictions] =
+    React.useState(false);
+  const [filterHighCertaintyPredictions, setfilterHighCertaintyPredictions] =
+    React.useState(false);
+  const [overlaysVisible, setoverlaysVisible] = React.useState(true);
 
+  const changeOverlay = (colorCode: string) => {
+    setOverlayColor(colorCode);
+  };
 
-export const SettingsProvider: React.FC<React.ReactNode> = ({children})=> 
-{
-    const [overlayColor,setOverlayColor] = useState("#C21515");
-    const [controlScheme,setControlScheme] = useState("box");
-    const [unit,setUnit] = useState("metric");
-    const [capturedLocations,setCapturedLocations] = useState<CapturedLocations[]>([]);
+  const changeScheme = (scheme: string) => {
+    setControlScheme(scheme);
+  };
 
-    const changeOverlay = (colorCode:string) => {
-        setOverlayColor(colorCode);
-    }
+  const changeUnit = (unit: string) => {
+    setUnit(unit);
+  };
 
-    const changeScheme = (scheme:string) => {
-        setControlScheme(scheme);
-    }
+  const changeCapturedLocations = (
+    location: CapturedLocations,
+    zoom: number
+  ) => {
+    // location.zoom = zoom;
+    // if (capturedLocations.length == 10) {
+    //   let newArray = capturedLocations.splice(1, 9);
+    //   newArray.push(location);
+    //   setCapturedLocations(newArray);
+    //   return;
+    // }
+    setCapturedLocations((locationArray) => [...locationArray, location]);
+  };
 
-    const changeUnit = (unit:string) => {
-        setUnit(unit);
-    }
+  const changeDetailsModal = (status: boolean) => {
+    setDetailsModal(status);
+  };
 
-    const changeCapturedLocations = (location:CapturedLocations,zoom:number) => 
-    {
-        location.zoom = zoom;
-        setCapturedLocations(locationArray=>[...locationArray,location]);
-    }
+  const changeSelectedLocation = (
+    location: CapturedLocations,
+    zoom: number
+  ) => {
+    location.zoom = zoom;
+    setSelectedLocation(location);
+  };
 
-    return (
-        <SettingsContext.Provider value ={{
-            overlayColor,controlScheme,unit,capturedLocations,
-            changeOverlay,changeScheme,changeUnit,changeCapturedLocations
-        }}>
-            {children}
-        </SettingsContext.Provider>
-    )
-}
+  return (
+    <SettingsContext.Provider
+      value={{
+        overlayColor,
+        controlScheme,
+        unit,
+        capturedLocations,
+        showingDetailsModal,
+        selectedLocation,
+        filterLowCertaintyPredictions,
+        filterHighCertaintyPredictions,
+        overlaysVisible,
+        setoverlaysVisible,
+        setfilterHighCertaintyPredictions,
+        setfilterLowCertaintyPredictions,
+        changeSelectedLocation,
+        changeDetailsModal,
+        changeOverlay,
+        changeScheme,
+        changeUnit,
+        changeCapturedLocations,
+      }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  );
+};
 
 const MainBody = () => {
   return (
-    <SettingsProvider>
-            <div className="main-body flex flex-r">
-                <TaskBar/>
-                <MapArea/>
-            </div>
-    </SettingsProvider>    
-  )
-}
+    <div className="main-body flex flex-r" style={{ height: '100vh' }}>
+      <TaskBar />
+      <MapArea />
+    </div>
+  );
+};
 
-export default MainBody
+export default MainBody;

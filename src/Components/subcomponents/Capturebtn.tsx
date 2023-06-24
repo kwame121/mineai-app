@@ -1,18 +1,29 @@
-import React, { FC, RefObject } from 'react';
-
+import React, { memo, FC, RefObject } from 'react';
 
 interface BtnProps {
-    buttonRef:any,
-    captureLocation:any;
+  buttonRef: any;
+  captureLocation: any;
 }
 
-const Capturebtn:FC<BtnProps> = (props) => {
-
+const Capturebtn: FC<BtnProps> = (props) => {
   return (
-    <div className="capture-btn button-default button-slanted" ref = {props.buttonRef} >
-        <span className="button-slanted-content">Capture</span>
+    <div
+      className="capture-btn button-default button-slanted"
+      ref={props.buttonRef}
+    >
+      <span
+        className="button-slanted-content"
+        style={{
+          fontFamily: 'inherit',
+          textTransform: 'initial',
+          fontWeight: '700',
+          fontSize: '20px',
+        }}
+      >
+        Capture
+      </span>
     </div>
-  )
-}
+  );
+};
 
-export default Capturebtn;
+export default memo(Capturebtn);
