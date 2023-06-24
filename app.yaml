@@ -1,0 +1,24 @@
+
+
+runtime: nodejs14
+
+handlers:
+  - url: /static/js
+    static_dir: build/static/js
+
+  - url: /static/css
+    static_dir: build/static/css
+
+  - url: /images
+    static_dir: build/images
+
+  - url: /static/media
+    static_dir: build/static/media
+
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+
+  - url: /
+    static_dir: build
+

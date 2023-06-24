@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fcac57bd.css",
+    "main.js": "/static/js/main.69f01d4c.js",
+    "static/js/787.206c87ff.chunk.js": "/static/js/787.206c87ff.chunk.js",
+    "static/media/MoonLight.otf": "/static/media/MoonLight.b64abc268d3e51c92d4c.otf",
+    "index.html": "/index.html",
+    "main.fcac57bd.css.map": "/static/css/main.fcac57bd.css.map",
+    "main.69f01d4c.js.map": "/static/js/main.69f01d4c.js.map",
+    "787.206c87ff.chunk.js.map": "/static/js/787.206c87ff.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fcac57bd.css",
+    "static/js/main.69f01d4c.js"
+  ]
+}
