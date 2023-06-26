@@ -39,7 +39,7 @@ export const useGetMap = () => {
   const reportImage = async (params: IReportParams) => {
     try {
       setReportLoading(true);
-      await axios.post(`http://localhost:5001/report`, {
+      await axios.post(`http://34.173.177.184:5001/report`, {
         latitude: params.coordinates.lat.toString(),
         longitude: params.coordinates.lng.toString(),
         type: params.type,
