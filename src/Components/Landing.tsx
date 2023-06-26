@@ -95,7 +95,7 @@ const GalleryExplainerContent = styled(Grid)(({ theme }) => ({
 
 const GalleryExplainerContentColumns = styled(Grid)(({ theme }) => ({
   padding: '30px',
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up('lg')]: {
     height: '100%',
   },
 }));
@@ -202,7 +202,7 @@ const Landing = () => {
         >
           {InfoCardData.map((infoCard, index) => {
             return (
-              <GalleryExplainerContentColumns xs={12} md={4} lg={3}>
+              <GalleryExplainerContentColumns xs={12} md={6} lg={3}>
                 <InfoCard {...infoCard} key={`${index}-${infoCard.title}`} />
               </GalleryExplainerContentColumns>
             );
